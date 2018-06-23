@@ -1,0 +1,18 @@
+{
+	"twitter_secrets" :
+	{
+		"consumer_key" : "pQBQlMuumP0MrlsSifNXqtFDO",
+		"consumer_secret" : "tr7xKOVD7ViLIsjM2EX49vkWFqL20VwxZ6UUnwORwJOWUJAex7",
+		"access_token" : "103550378-EbT1jWdaed2hnxpFocVhwdWVxf0csoQpl8onrqS2",
+		"access_token_secret" : "RaKUpPCBSpMCt1dvTKxldJPypPjBa4HMqyc6oyaRImLMb"
+		}
+		,
+		"email_settings" : {
+			"From" : "sg.alexa.updates@gmail.com",
+		    "To" : "sourabh.iitg@gmail.com",
+		    "passwd" : "5gupdates",
+		    "recipients" : ["sourabh.iitg@gmail.com","sg.alexa.updates@gmail.com"]
+		}
+		
+
+}

@@ -1,3 +1,4 @@
+import json
 import smtplib
 from os.path import basename
 from email.mime.multipart import MIMEMultipart
@@ -7,10 +8,17 @@ from email.mime.application import MIMEApplication
 
 
 def send_email(alexa_resopnse, filename = None):
-    From = "sg.alexa.updates@gmail.com"
-    To = 'sourabh.iitg@gmail.com'
-    passwd = "5gupdates"
-    recipients = ['sourabh.iitg@gmail.com','sg.alexa.updates@gmail.com']
+
+    f = open('.\\settings\\configuration.json', 'r')
+    data = json.loads(f.read())
+
+    email_info = data['email_settings']
+
+    From = email_info['From']
+    To = email_info['To']
+    passwd = email_info['passwd']
+    recipients = email_info['recipients']
+
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
@@ -30,7 +38,7 @@ def send_email(alexa_resopnse, filename = None):
     msg.attach(MIMEText(body, "plain"))
 
     if filename :
-        
+
 
         with open(filename, "rb") as fil :
             part = MIMEApplication(fil.read(),Name = basename(filename))
