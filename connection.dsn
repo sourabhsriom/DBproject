@@ -1,0 +1,7 @@
+[ODBC]
+DRIVER=ODBC Driver 11 for SQL Server
+UID=sds
+WSID=LT-CNU252CCM5
+APP=Microsoft® Windows® Operating System
+SERVER=LT-CNU252CCM5
+Description=local
