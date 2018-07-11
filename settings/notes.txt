@@ -1,0 +1,14 @@
+Ideas to be implemented :
+
+1. Coin-in between X and Y hours
+2. Busiest hours of the day
+3. What time did drop end
+4. Softcount upload went through
+5. Top performing themes
+6. Carded and uncarded player
+7. Top 10 players of the day
+8. Comparison graph between gaming dates for coin-in
+9. Use authorization for alexa commands using echo show
+10. Alexa interface with AMX and other devices.
+11. Change channel in coolsign
+12. Combining response from multiple products

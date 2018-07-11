@@ -1,0 +1,142 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "scientific games",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": [
+                        "random"
+                    ]
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "YesIntent",
+                    "slots": [
+                        {
+                            "name": "title",
+                            "type": "AMAZON.ProfessionalType"
+                        }
+                    ],
+                    "samples": [
+                        "jobs like {title}",
+                        "jobs similar to {title}",
+                        "which jobs have {title} in them"
+                    ]
+                },
+                {
+                    "name": "NoIntent",
+                    "slots": [],
+                    "samples": [
+                        "no thank you",
+                        "not today",
+                        "no"
+                    ]
+                },
+                {
+                    "name": "FarziIntent",
+                    "slots": [],
+                    "samples": [
+                        "lets have some fun",
+                        "i want to have some fun",
+                        "fun"
+                    ]
+                },
+                {
+                    "name": "coinIn",
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "coin in for {date}",
+                        "can you tell me my coin in for {date}",
+                        "what is my coin in for {date}",
+                        "what's my coin in for {date} "
+                    ]
+                },
+                {
+                    "name": "bestSlot",
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "top slot for {date}",
+                        "best slot for {date}",
+                        "best performing slot on {date}",
+                        "my best performing slot for {date}"
+                    ]
+                },
+                {
+                    "name": "denomIntent",
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "denom",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "how did the {denom} cent games do on {date}",
+                        "what was my coin in for {denom} cent games for {date}",
+                        "coin in for {denom} cent for {date}"
+                    ]
+                },
+                {
+                    "name": "denomEmailIntent",
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "denom",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "send me a coin in report for {date}",
+                        "coin in report for {date}",
+                        "denom report for {date}",
+                        "excel report for {date}",
+                        "send me a report for {date}"
+                    ]
+                },
+                {
+                    "name": "sentiment",
+                    "slots": [
+                        {
+                            "name": "query",
+                            "type": "AMAZON.US_CITY"
+                        }
+                    ],
+                    "samples": [
+                        "public opinion of {query}",
+                        "sentiment analysis for {query}",
+                        "what do people think about {query}"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}

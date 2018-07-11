@@ -65,7 +65,7 @@ class TwitterClient(object):
 		try:
 			# call twitter api to fetch tweets
 			fetched_tweets = self.api.search(q = query, count = count)
-
+			print("fetching sentiments for : ", query)
 			# parsing tweets one by one
 			for tweet in fetched_tweets:
 				# empty dictionary to store required params of a tweet
@@ -95,7 +95,7 @@ def sentiments(query):
 	# creating object of TwitterClient Class
 	api = TwitterClient()
 	# calling function to get tweets
-	tweets = api.get_tweets(query = 'india', count = 200)
+	tweets = api.get_tweets(query, count = 200)
 
 	# picking positive tweets from tweets
 	ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
@@ -108,18 +108,7 @@ def sentiments(query):
 	# percentage of neutral tweets
 	neutral_tweets = len(tweets)-len(ptweets)-len(ntweets)
 	print("Neutral tweets percentage: {} %".format(round(100*neutral_tweets/len(tweets),0)))
-	neg_tweets = len(ntweets)
-	pos_tweets = len(ptweets)
-	return (pos_tweets, neg_tweets, neutral_tweets)
-'''
-	# printing first 5 positive tweets
-	print("\n\nPositive tweets:")
-	for tweet in ptweets[:10]:
-		print(tweet['text'])
-
-	# printing first 5 negative tweets
-	print("\n\nNegative tweets:")
-	for tweet in ntweets[:10]:
-		print(tweet['text'])
-'''
-#sentiments("india")
+	neg_tweets = round(100*len(ntweets)/len(tweets),0)
+	pos_tweets = round(100*len(ptweets)/len(tweets),0)
+	neu_tweets = round(100*neutral_tweets/len(tweets),0)
+	return (pos_tweets, neg_tweets, neu_tweets)

@@ -1,21 +1,31 @@
 from flask import Flask
 from flask_ask import Ask, question, statement, session
 import pyodbc
-#import pymssql
+import pymssql
 import emailAlert as ea
 import excel_creator as ec
 import sentiment_analysis as sa
+import json
+
+'''
+host = '10.11.203.56'
+user = "sdsuser"
+passwd = "abc@123"
+DB = "SDS132"
+'''
+
+f = open('.\\settings\\configuration.json', 'r')
+data = json.loads(f.read())
+
+conn_info = data['DB_info']
+host = conn_info['host']
+user = conn_info['user']
+passwd = conn_info['passwd']
+DB = conn_info['DB']
 
 
-host = "LT-CNU252CCM5"
-user = "sds"
-passwd = "Master1!"
-DB = "SDS_125"
-
-
-
-conn = pyodbc.connect('DRIVER={ODBC Driver 11 for SQL Server};SERVER='+host+';DATABASE='+DB+';UID='+user+';PWD='+ passwd)
-#conn = pymssql.connect(host,user,passwd,DB)
+#conn = pyodbc.connect('DRIVER={ODBC Driver 11 for SQL Server};SERVER='+host+';DATABASE='+DB+';UID='+user+';PWD='+ passwd)
+conn = pymssql.connect(host,user,passwd,DB)
 cursor = conn.cursor()
 
 
@@ -24,11 +34,11 @@ error = "I'm sorry, I'm unable to figure that out right now"
 
 def getDenomEmailInfo(date):
     query = "SELECT ava.GAME_DENOM as denom, SUM(SDS_Bets) as coin_in\
-  FROM [SDS_125].[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
-  on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
-   where Mtr_GameDay = '{}' and PTYP_ID = 1\
+    FROM {}.[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
+    on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
+    where Mtr_GameDay = '{}' and PTYP_ID = 1\
     group by ava.GAME_DENOM\
-    order by coin_in desc".format(date)
+    order by ava.GAME_DENOM asc".format(DB,date)
 
     cursor.execute(query)
     row = cursor.fetchone()
@@ -36,7 +46,8 @@ def getDenomEmailInfo(date):
     list = []
     values = []
     while row :
-        dollars = '${:,.2f}'.format(row[1])
+        dollars = row[1]
+        #dollars = '${:,.2f}'.format(row[1])
         list = [row[0], dollars]
         values.append(list)
         row = cursor.fetchone()
@@ -45,7 +56,7 @@ def getDenomEmailInfo(date):
 
 def queryDB(title):
 
-    query = "select * from [USER].FUNCTION_GROUP where FUNCGRP_NAME like '%{}%';".format(title)
+    query = "select * from {}[USER].FUNCTION_GROUP where FUNCGRP_NAME like '%{}%';".format(DB,title)
     print (query)
     cursor.execute(query)
     row = cursor.fetchone()
@@ -61,18 +72,18 @@ def queryDB(title):
 
 def getDBSlotInfo(date):
     query = "SELECT Mtr_NamedAsstID, max(ava.SLOT_NUMBER) as slot_number, SUM(SDS_Bets) as coin_in\
-  FROM [SDS_125].[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
-  on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
+    FROM {}.[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
+    on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
     where Mtr_GameDay = '{}' and PTYP_ID = 1\
-  group by Mtr_NamedAsstID\
-    order by coin_in desc".format(date)
+    group by Mtr_NamedAsstID\
+    order by coin_in desc".format(DB,date)
 
     cursor.execute(query)
     row = cursor.fetchone()
     return (row[1],row[2])
 
 def getCoinInfromDB(date):
-    query = "SELECT sum(SDS_Bets) as coin_in FROM [SDS_125].[ACCOUNTING].[VIEW_SDS_VALUE] where Mtr_GameDay = '{}' and PTYP_ID = 1".format(date)
+    query = "SELECT sum(SDS_Bets) as coin_in FROM {}.[ACCOUNTING].[VIEW_SDS_VALUE] where Mtr_GameDay = '{}' and PTYP_ID = 1".format(DB,date)
     print (query)
     cursor.execute(query)
     row = cursor.fetchone()
@@ -84,11 +95,11 @@ def getDenomInfoDB(date,denom):
 
     denom = int(denom)/100
     query = "SELECT ava.GAME_DENOM as denom, SUM(SDS_Bets) as coin_in\
-  FROM [SDS_125].[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
-  on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
-   where Mtr_GameDay = '{}' and PTYP_ID = 1 and ava.GAME_DENOM = {}\
+    FROM {}.[ACCOUNTING].[VIEW_SDS_VALUE] as asds inner join ACCOUNTING.VIEW_ASSET as ava\
+    on ava.NAMED_ASSET_ID = asds.Mtr_NamedAsstID\
+    where Mtr_GameDay = '{}' and PTYP_ID = 1 and ava.GAME_DENOM = {}\
     group by ava.GAME_DENOM\
-    order by coin_in desc".format(date, denom)
+    order by coin_in desc".format(DB,date, denom)
 
     cursor.execute(query)
     row = cursor.fetchone()
@@ -128,9 +139,13 @@ def getSlotInfo(date):
 def getDenomInfo(date,denom):
     date = date
     denom = denom
-    coinIn = getDenomInfoDB(date,denom)
-    coinIn = round(coinIn,2)
-    response = "coin in for the {} cent denom was ${}".format(denom, coinIn)
+    try :
+        coinIn = getDenomInfoDB(date,denom)
+        coinIn = round(coinIn,2)
+        response = "coin in for the {} cent denom was ${}".format(denom, coinIn)
+    except :
+        response = error
+
     return question(response + followup)
 
 @ask.intent("denomEmailIntent")
