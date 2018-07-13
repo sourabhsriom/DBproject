@@ -7,6 +7,7 @@ import excel_creator as ec
 import sentiment_analysis as sa
 import json
 
+
 '''
 host = '10.11.203.56'
 user = "sdsuser"
@@ -107,6 +108,12 @@ def getDenomInfoDB(date,denom):
 
 app = Flask(__name__)
 ask = Ask(app, "/")
+
+
+@app.route('/home')
+def helloWorld():
+    return "Hello World!"
+
 
 @ask.launch
 def start_skill():
