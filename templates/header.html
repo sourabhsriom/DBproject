@@ -1,0 +1,40 @@
+
+    <div class="tile is-ancestor">
+      <div class="tile is-parent">
+        <div class="tile is-child ">
+          <nav class="navbar is-transparent">
+            <div class="navbar-brand">
+
+              <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+
+              </div>
+            </div>
+
+            <div id="navbarExampleTransparentExample" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="{{url_for('landing')}}">
+                  Home
+                </a>
+                <div class="navbar-item ">
+                  <a class="navbar-item" href="{{url_for('help')}}">
+                    Help
+                  </a>
+
+                </div>
+              </div>
+
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="field is-grouped">
+                    <a class="navbar-item" href="{{url_for('help')}}">
+                      Login
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>

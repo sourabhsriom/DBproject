@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/css/bulma.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+    <title>SG Global BI</title>
+  </head>
+  <body>
+
+    <div class="tile is-ancestor">
+      <div class="tile is-parent">
+        <div class="tile is-child ">
+          <nav class="navbar is-transparent">
+            <div class="navbar-brand">
+
+              <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+
+              </div>
+            </div>
+
+            <div id="navbarExampleTransparentExample" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="{{url_for('landing')}}">
+                  Home
+                </a>
+                <div class="navbar-item ">
+                  <a class="navbar-item" href="/static/img/sg_logo.png">
+                    Help
+                  </a>
+
+                </div>
+              </div>
+
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="field is-grouped">
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+
+<div class="tile is-ancestor">
+  <div class="tile is-2 is-vertical is-parent">
+    <div class="tile is-child ">
+      <p class="title">Recent Searches</p>
+
+    </div>
+
+  </div>
+  <div class="tile is-parent">
+    <div class="tile is-child box ">
+
+    <div class="center"  >
+      <figure class="image is-64x64 center">
+        <img src="/static/img/sg_logo.png" alt="" >
+      </figure>
+          <form class="center" action="{{url_for('displayGraph')}}" method="post">
+
+        <input class="input is-rounded" type="text" placeholder="How can I help you?" name="name">
+        <br>
+        <br>
+        <div class="center">
+          <input type="submit" name="submit" value="Ask away!">
+        </div>
+
+      </form>
+    </div>
+
+
+  </div>
+</div>
+
+</div>
+
+
+  </body>
+</html>

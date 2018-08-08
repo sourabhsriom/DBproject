@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>SciBOT</title>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.0.0.min.js"></script>
+<link rel="stylesheet" href="styles/layout.css" type="text/css">
+<link rel="stylesheet" href="styles/search.css" type="text/css">
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+<script type="text/javascript" src="scripts/indexJS.js">
+// function myFunction(){
+//   var x = document.getElementById("latest");
+//   if (x.style.display === "block") {
+//     x.style.display = "none";
+//   } else {
+//     x.style.display = "none";
+//   }
+//   $('#tableauIFrame').html('<iframe id="iframe" src="http://10.11.203.70:84/t/Praxis/views/LineGraphDashBoard/LineGraphDashBoard?:embed=y&Gender=Male&:showAppBanner=false&:showShareOptions=false&:display_count=no&:showVizHome=no&:tabs=no&:toolbar=no" style="height:430px;width:950px;margin:5px 10px 25px 5px"></iframe>');
+// }
+</script>
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="headertitle">
+      <figure>
+      <img src="images/demo/sg_logo.png" width="85" height="40">
+    </figure>
+    </div>
+    <nav>
+      <ul>
+        <li class="last"><img src="images/demo/UserProfile.png" width="25" height="20"><a href="#"></a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<hr>
+<button id="searchButton" onclick="myFunction()">Search</button>
+<div class="wrapper row2">
+  <div id="container" class="clear">
+<section class="webdesigntuts-workshop">
+	<form action="" method="">
+		<input type="search" placeholder="How can i help you ?">
+		<button id="searchButton">Search</button>
+	</form>
+</section>
+     <div id="homepage">
+      <section id="latest">
+        <article>
+          <figure>
+            <ul>
+              <li class="one_quarter"><img src="images/demo/215x150.gif" width="215" height="150" alt=""></li>
+              <li class="one_quarter"><img src="images/demo/215x150.gif" width="215" height="150" alt=""></li>
+              <li class="one_quarter"><img src="images/demo/215x150.gif" width="215" height="150" alt=""></li>
+              <li class="one_quarter lastbox"><img src="images/demo/215x150.gif" width="215" height="150" alt=""></li>
+            </ul>
+          </figure>
+        </article>
+      </section>
+      <div id="tableauIFrame"></div>
+  </div>
+</div>
+</div>
+</body>
+</html>

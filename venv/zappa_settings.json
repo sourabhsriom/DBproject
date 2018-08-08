@@ -1,9 +1,0 @@
-{
-    "dev": {
-        "app_function": "dbproject.app",
-        "profile_name": null,
-        "project_name": "venv",
-        "runtime": "python3.6",
-        "s3_bucket": "zappa-3hh0is8nn"
-    }
-}

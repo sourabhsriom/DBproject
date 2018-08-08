@@ -1,4 +1,11 @@
-from flask import Flask
+from flask import (Flask,
+                   render_template,
+                   request,
+                   redirect,
+                   url_for,
+                   flash,
+                   jsonify,
+                   make_response)
 from flask_ask import Ask, question, statement, session
 import pyodbc
 import pymssql
@@ -6,7 +13,13 @@ import emailAlert as ea
 import excel_creator as ec
 import sentiment_analysis as sa
 import json
-
+import webMethods as web
+import requests
+import httplib2
+import dbcalls as db
+import datemodule as dm
+import datetime
+import intent as i
 
 '''
 host = '10.11.203.56'
@@ -109,11 +122,110 @@ def getDenomInfoDB(date,denom):
 app = Flask(__name__)
 ask = Ask(app, "/")
 
+@app.route('/')
+def landing():
+    return render_template('hello.html')
+
+@app.route('/design/')
+def designer():
+    return render_template('design.html')
+
 
 @app.route('/home')
 def helloWorld():
-    return "Hello World!"
+    return web.coinInGraph()
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+@app.route('/graph', methods = ['GET','POST'])
+def displayGraph():
+
+    if request.method == 'POST' :
+        question = request.form['name']
+
+        try :
+            date = dm.returnDates(question)[0]
+
+
+            values = db.getDenomEmailInfo(date = date)
+
+            print (values)
+            return render_template("graph.html", question = question, values = values)
+        except :
+            return render_template('help.html')
+    else :
+        return render_template("graph.html")
+
+@app.route('/todaysCoinIn')
+def todaysCoinIn():
+
+    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = '2016-09-10'
+    values = db.getDenomEmailInfo(today)
+    total =  '${:,.2f}'.format(db.getCoinInfromDB(today))
+    return render_template('graph.html', question = question, values = values, total = total)
+
+today = datetime.date.today()
+yesterday = today - datetime.timedelta(days = 1)
+
+today = today.strftime('%Y-%m-%d')
+
+yesterday = yesterday.strftime('%Y-%m-%d')
+
+
+today = '2016-09-10'
+yesterday = '2016-09-09'
+
+@app.route('/comparision')
+def coinInCompare(date1 = today, date2 = yesterday):
+    values1, values2, total1, total2 = db.coinInComparision(date1, date2)
+    total1 = '${:,.2f}'.format(total1)
+    total2 = '${:,.2f}'.format(total2)
+    values = []
+    print ("checkpoint is reached")
+    for i in range(len(values1)):
+        #print (values1[i][0], values1[i][1], values2[i][1])
+        values.append([values1[i][0], values1[i][1], values2[i][1]])
+        #values[i] = [values1[i][0], values1[i][1], values2[i][1]]
+
+    return render_template('comparision.html', values = values, total1 = total1, total2 = total2)
+
+
+
+@app.route('/intentHandler', methods = ['GET','POST'])
+def intentHandler():
+
+    if request.method == 'POST' :
+        question = request.form['name']
+        dates = dm.returnDates(question)
+
+        if len(dates) > 1 :
+            return coinInCompare(dates[0], dates[1])
+
+        date = dates[0]
+
+        if i.isCoinIn(question) and i.isHourly(question):
+            values = db.hourlyCoinIn(date)
+            return render_template('hourly_graph.html', values = values)
+
+        elif i.isCoinIn(question) and not i.isHourly(question):
+            values = db.getDenomEmailInfo(date = date)
+            total = '${:,.2f}'.format(db.getCoinInfromDB(date))
+            return render_template('graph.html', question = question, values = values, total = total)
+        elif i.isHourly(question) :
+            values = db.hourlyCoinIn(date)
+            return render_template('hourly_graph.html', values = values)
+
+@app.route('/hourly')
+def hourlyGraph():
+    today = datetime.date.today().strftime('%Y-%m-%d')
+    today = '2016-09-10'
+    values = db.hourlyCoinIn(today)
+    total = '${:,.2f}'.format(db.getCoinInfromDB(today))
+    print (values)
+    return render_template('hourly_graph.html', values = values, total = total)
 
 @ask.launch
 def start_skill():

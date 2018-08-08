@@ -1,0 +1,138 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+
+
+
+<div class="tile is-ancestor">
+  <div class="tile is-2 is-vertical is-parent">
+    <div class="tile is-child  ">
+      <br>
+      <br>
+
+<!--
+      <ul >
+  <li>
+    <a href="{{url_for('coinInCompare')}}">Coin in comparision</a>
+  </li>
+  <li>
+    <a href="{{url_for('hourlyGraph')}}">Hourly Coin in data</a>
+  </li>
+  <li>
+    <a href="{{url_for('todaysCoinIn')}}">Coin in By denom report</a>
+  </li>
+</ul> -->
+
+
+
+    </div>
+
+  </div>
+
+  <div class="tile is-1 is-vertical is-parent">
+    <div class="tile is child">
+
+    </div>
+  </div>
+
+
+  <div class="tile is-parent">
+    <div class="tile is-child  ">
+
+    <div class="center"  >
+      <figure class="image is-96x96 center">
+        <a href="https://www.scientificgames.com/" target="_blank"><img src="/static/img/sg_logo.png" alt="" ></a>
+      </figure>
+          <form class="has-text-centered" style="width:80%;" action="{{url_for('intentHandler')}}" method="post">
+            <div class="field">
+
+              <p control  has-icons-right>
+
+                <input class="input is-rounded" type="text" placeholder="How can I help you?" name="name">
+
+              </p>
+
+
+            </div>
+
+
+
+        <br>
+        <br>
+
+
+
+
+        <div class="control center">
+  <button class="button is-primary">Ask me!</button>
+
+</div>
+
+
+
+      </form>
+
+
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+</div>
+
+<div class="tile is-ancestor has-text-centered" id="hideaway" style="display:block;">
+  <div class="tile is-vertical is-12">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-info">
+          <p class="title">
+          <a href="{{url_for('coinInCompare')}}" class="dropdown-item">Coin in comparision</a></p>
+
+        </article>
+
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">
+          <a href="{{url_for('hourlyGraph')}}" class="dropdown-item">Hourly Coin in data</a></p>
+
+
+        </article>
+      </div>
+
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title"><a href="{{url_for('todaysCoinIn')}}" class="dropdown-item">Coin in By denom report</a></p>
+
+
+        </article>
+      </div>
+
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">
+          <a href="{{url_for('hourlyGraph')}}" class="dropdown-item">Hourly Coin in data</a></p>
+
+
+        </article>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<a href="javascript:;" onClick="document.getElementById('hideaway').style.display='none';">Hide content</a>
+<a href="javascript:;" onClick="document.getElementById('hideaway').style.display='block';">Reveal Content</a>
+
+
+{% endblock %}

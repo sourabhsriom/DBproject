@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var a = [['Hour', 'Coin In']]
+
+
+        a = a.concat({{values}})
+        var data = google.visualization.arrayToDataTable(
+        a
+        );
+
+        var options = {
+          chart: {
+            title: 'Hourly Coin In data',
+            subtitle: 'graph',
+                      }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+  </head>
+  <body>
+
+    <div class="">
+      <p>
+      Total coin in for the day was {{total}}</p>
+    </div>
+
+    <div id="hideaway" style="display:none;">Here's the hidden content</div>
+    <a href="javascript:;" onClick="document.getElementById('hideaway').style.display='block';">Reveal hidden content</a>
+    <a href="javascript:;" onClick="document.getElementById('hideaway').style.display='none';">Hide content again</a>
+    <div id="columnchart_material" style="position : absolute; top : 250px; left : 50px;width: 800px; height: 400px;"></div>
+  </body>
+
+{% endblock%}
